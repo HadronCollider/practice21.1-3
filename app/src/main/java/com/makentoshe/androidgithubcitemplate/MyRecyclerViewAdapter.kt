@@ -41,7 +41,7 @@ RecyclerView.Adapter<MyRecyclerViewAdapter.MyViewHolder>(){
 
         if (mangaImages[position] != null){
             holder.mangaPreviewImage.setImageBitmap(mangaImages[position])
-            Log.d("CALL_CACHE", "pos: $position ${mangaImages[position]} - cache used")
+            //Log.d("CALL_CACHE", "pos: $position ${mangaImages[position]} - cache used")
         }
         else{
             lifecycleCoroutineScope.launch(Dispatchers.IO){
@@ -50,7 +50,7 @@ RecyclerView.Adapter<MyRecyclerViewAdapter.MyViewHolder>(){
                 lifecycleCoroutineScope.launch(Dispatchers.Main){
                     holder.mangaPreviewImage.setImageBitmap(mangaImages[position]) // put image to ImageView
                 }
-                Log.d("CREATE_CACHE", "pos: $position ${mangaImages[position]} - cache created")
+                //Log.d("CREATE_CACHE", "pos: $position ${mangaImages[position]} - cache created")
             }
         }
 
@@ -61,7 +61,7 @@ RecyclerView.Adapter<MyRecyclerViewAdapter.MyViewHolder>(){
         val itemView =
             LayoutInflater.from(parent.context).inflate(
                 R.layout.recyclerview_item,
-            parent, true)
+            parent, false)
 
         return MyViewHolder(itemView)
     }
