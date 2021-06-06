@@ -37,24 +37,10 @@ RecyclerView.Adapter<MyRecyclerViewAdapter.MyViewHolder>(){
 
         holder.mangaTitle.text = data[position].title
         holder.mangaGenre.text = data[position].genre
-        holder.mangaPreviewImage.setImageDrawable(null)
-
-        if (mangaImages[position] != null){
-            holder.mangaPreviewImage.setImageBitmap(mangaImages[position])
-            //Log.d("CALL_CACHE", "pos: $position ${mangaImages[position]} - cache used")
+        if(mangaImages[position] == null){
+            mangaImages[position] = getNewImage(data[position].image, screenSize)
         }
-        else{
-            lifecycleCoroutineScope.launch(Dispatchers.IO){
-                val newImage: Bitmap = getNewImage(Picasso.get().load(data[position].imageUrl).get(), screenSize)
-                mangaImages[position] = newImage // add to cache
-                lifecycleCoroutineScope.launch(Dispatchers.Main){
-                    holder.mangaPreviewImage.setImageBitmap(mangaImages[position]) // put image to ImageView
-                }
-                //Log.d("CREATE_CACHE", "pos: $position ${mangaImages[position]} - cache created")
-            }
-        }
-
-
+        holder.mangaPreviewImage.setImageBitmap(mangaImages[position])
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -80,6 +66,5 @@ RecyclerView.Adapter<MyRecyclerViewAdapter.MyViewHolder>(){
         }
         return result
     }
-
 
 }

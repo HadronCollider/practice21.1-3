@@ -1,14 +1,20 @@
 package com.makentoshe.androidgithubcitemplate
 
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.WindowManager
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
@@ -21,11 +27,19 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView.layoutManager = LinearLayoutManager(this,
             LinearLayoutManager.HORIZONTAL, false)
-        recyclerView.adapter = MyRecyclerViewAdapter(generateList(), getScreenSize(), lifecycleScope) // TODO pass lifecycleScope + add .withLoadStateFooter(FootAdapter)
 
+        lifecycleScope.launch(Dispatchers.Main) {
+            val list = generateList()
+
+            recyclerView.adapter = MyRecyclerViewAdapter(
+                list,
+                getScreenSize(),
+                lifecycleScope
+            ) // TODO pass lifecycleScope + add .withLoadStateFooter(FootAdapter)
+        }
     }
 
-    private fun generateList(): List<Manga>{
+    private suspend fun generateList(): List<Manga> {
         val list = mutableListOf<Manga>()
 
         val urls: MutableList<String> = mutableListOf(
@@ -41,9 +55,11 @@ class MainActivity : AppCompatActivity() {
             "https://c.wallhere.com/photos/d3/be/pond_geese_lodges_mill_wheel_summer-1054309.jpg!d",
         )
 
-        for(i in 0 until 9){
-            list.add(Manga("manga №$i", "Any genre",
-                urls[i]))
+        for (i in 0 until 9) {
+            val image = lifecycleScope.async(Dispatchers.IO){
+                Picasso.get().load(urls[i]).get()}
+            list.add(
+                Manga("manga №$i", "Any genre", urls[i], image.await()))
         }
         return list
     }
