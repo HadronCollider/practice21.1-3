@@ -1,7 +1,6 @@
 package com.makentoshe.androidgithubcitemplate
 
 import android.graphics.Bitmap
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +8,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
-import kotlinx.coroutines.*
 import java.util.concurrent.CopyOnWriteArrayList
 
 
@@ -38,7 +35,7 @@ RecyclerView.Adapter<MyRecyclerViewAdapter.MyViewHolder>(){
         holder.mangaTitle.text = data[position].title
         holder.mangaGenre.text = data[position].genre
         if(mangaImages[position] == null){
-            mangaImages[position] = getNewImage(data[position].image, screenSize)
+//            mangaImages[position] = getNewImage(data[position].imge, screenSize)
         }
         holder.mangaPreviewImage.setImageBitmap(mangaImages[position])
     }
