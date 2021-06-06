@@ -1,12 +1,10 @@
 package com.makentoshe.androidgithubcitemplate
 
-
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
 
 class MainActivity : AppCompatActivity() {
 
