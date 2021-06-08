@@ -1,4 +1,4 @@
-package com.makentoshe.androidgithubcitemplate
+package com.makentoshe.androidgithubcitemplate.api
 
 // implementation 'com.squareup.retrofit2:retrofit:2.9.0'
 // we also have this retrofit implementation in build.gradle in \app
