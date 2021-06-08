@@ -1,4 +1,4 @@
-package com.makentoshe.androidgithubcitemplate
+package com.makentoshe.androidgithubcitemplate.main_activity
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -9,16 +9,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.recyclerview.widget.RecyclerView
+import com.makentoshe.androidgithubcitemplate.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import okhttp3.Request
 
 
-class PopularTodayRecyclerViewAdapter(private val data: List<Manga>,
-                                      private val lifecycleScope: LifecycleCoroutineScope,
-                                      private val client: OkHttpClient):
-    RecyclerView.Adapter<PopularTodayRecyclerViewAdapter.TopViewHolder>(){
+class TopFeedRecyclerViewAdapter(private val data: List<Manga>,
+                                 private val lifecycleScope: LifecycleCoroutineScope,
+                                 private val client: OkHttpClient
+) :
+RecyclerView.Adapter<TopFeedRecyclerViewAdapter.TopViewHolder>(){
 
     private val cache  = HashMap<String, Bitmap>()
 
@@ -26,7 +28,7 @@ class PopularTodayRecyclerViewAdapter(private val data: List<Manga>,
     class TopViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         var mangaPreviewImage: ImageView = itemView.findViewById(R.id.mangaPreviewImage)
         var mangaTitle: TextView = itemView.findViewById(R.id.mangaTitle)
-        var mangaTypeAndYear: TextView = itemView.findViewById(R.id.mangaTypeAndYear)
+        var mangaGenre: TextView = itemView.findViewById(R.id.mangaGenre)
     }
 
     override fun getItemCount(): Int {
@@ -35,7 +37,7 @@ class PopularTodayRecyclerViewAdapter(private val data: List<Manga>,
 
     override fun onBindViewHolder(holder: TopViewHolder, position: Int) {
         holder.mangaTitle.text = data[position].title
-        holder.mangaTypeAndYear.text = data[position].genre
+        holder.mangaGenre.text = data[position].genre
         getMangaImage(data[position].imageUrl){ bitmap ->
             holder.mangaPreviewImage.setImageBitmap(bitmap)
         }
@@ -44,8 +46,8 @@ class PopularTodayRecyclerViewAdapter(private val data: List<Manga>,
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopViewHolder {
         val itemView =
             LayoutInflater.from(parent.context).inflate(
-                R.layout.popular_today_recyclerview_element,
-                parent, false)
+                R.layout.top_feed_recyclerview_element,
+            parent, false)
 
         return TopViewHolder(itemView)
     }
@@ -69,5 +71,6 @@ class PopularTodayRecyclerViewAdapter(private val data: List<Manga>,
             }
         }
     }
+
 
 }

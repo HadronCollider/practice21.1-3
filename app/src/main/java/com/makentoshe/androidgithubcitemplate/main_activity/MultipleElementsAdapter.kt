@@ -1,4 +1,4 @@
-package com.makentoshe.androidgithubcitemplate
+package com.makentoshe.androidgithubcitemplate.main_activity
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,10 +8,11 @@ import android.widget.TextView
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.makentoshe.androidgithubcitemplate.R
 import okhttp3.OkHttpClient
 
 class MultipleElementsAdapter(private val data: List<Pair<String, List<Manga>>>,
-    private val lifecycleScope: LifecycleCoroutineScope)
+                              private val lifecycleScope: LifecycleCoroutineScope)
     : RecyclerView.Adapter<MultipleElementsAdapter.BaseViewHolder>()  {
 
     private val client = OkHttpClient()

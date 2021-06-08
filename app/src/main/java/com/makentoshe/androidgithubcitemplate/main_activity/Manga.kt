@@ -1,5 +1,4 @@
-
-package com.makentoshe.androidgithubcitemplate
+package com.makentoshe.androidgithubcitemplate.main_activity
 
 import android.graphics.Bitmap
 
