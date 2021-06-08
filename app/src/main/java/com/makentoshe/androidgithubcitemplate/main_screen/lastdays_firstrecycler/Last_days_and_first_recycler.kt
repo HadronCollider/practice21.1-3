@@ -1,4 +1,4 @@
-package com.makentoshe.androidgithubcitemplate.data_classes.lastdays_firstrecycler
+package com.makentoshe.androidgithubcitemplate.main_screen.lastdays_firstrecycler
 import com.google.gson.annotations.SerializedName
 
 // implementation group: 'com.squareup.retrofit2', name: 'converter-gson', version: '2.9.0'

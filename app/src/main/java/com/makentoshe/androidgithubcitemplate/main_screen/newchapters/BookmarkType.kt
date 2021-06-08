@@ -1,4 +1,4 @@
-package com.makentoshe.androidgithubcitemplate.data_classes.newchapters
+package com.makentoshe.androidgithubcitemplate.main_screen.newchapters
 import com.google.gson.annotations.SerializedName
 
 data class BookmarkType(

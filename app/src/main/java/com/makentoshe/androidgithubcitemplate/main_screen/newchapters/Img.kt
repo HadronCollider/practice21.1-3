@@ -1,4 +1,4 @@
-package com.makentoshe.androidgithubcitemplate.data_classes.lastdays_firstrecycler
+package com.makentoshe.androidgithubcitemplate.main_screen.newchapters
 import com.google.gson.annotations.SerializedName
 
 data class Img(
