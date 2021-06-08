@@ -9,10 +9,10 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface BasicMangaApi {
+interface MainScreenAPI {
     @GET("/api/titles/")
     fun getLastDaysManga(
-        // /api/titles/?com.makentoshe.androidgithubcitemplate.data_classes.last_days.last_days=7&ordering=-votes
+        // /api/titles/?com.makentoshe.androidgithubcitemplate.main_screen.data_classes.last_days.last_days=7&ordering=-votes
         @Query("last_days")
         lastDays: Int,
         @Query("ordering")
