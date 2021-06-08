@@ -12,8 +12,8 @@ import retrofit2.http.Query
 interface BasicMangaApi {
     @GET("/api/titles/")
     fun getLastDaysManga(
-        // /api/titles/?last_days=7&ordering=-votes
-        @Query("last_days")
+        // /api/titles/?com.makentoshe.androidgithubcitemplate.data_classes.last_days.last_days=7&ordering=-votes
+        @Query("com.makentoshe.androidgithubcitemplate.data_classes.last_days.last_days")
         lastDays: Int,
         @Query("ordering")
         ordering: String?
@@ -24,7 +24,7 @@ interface BasicMangaApi {
         ordering: String?,
         @Query("count")
         count: Int?
-    )
+    ): Call<ResponseBody>
 
     @GET("/api/titles/{category}/")
     fun getNewChapters(
@@ -35,7 +35,7 @@ interface BasicMangaApi {
         page: Int,
         @Query("count")
         count: Int?
-    )
+    ): Call<ResponseBody>
     fun getDailyTop(
         // /api/titles/daily-top/?count=7
         @Path("category")
@@ -43,5 +43,5 @@ interface BasicMangaApi {
         @Query("count")
         count: Int?
 
-    )
+    ): Call<ResponseBody>
 }
