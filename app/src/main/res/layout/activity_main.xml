@@ -18,6 +18,8 @@
         app:layout_constraintTop_toBottomOf="@+id/searchCardViewWrapper" />
 
     <androidx.cardview.widget.CardView
+        android:visibility="invisible"
+
         android:id="@+id/searchCardViewWrapper"
         android:layout_width="330dp"
         android:layout_height="40dp"
