@@ -1,6 +1,5 @@
 package com.makentoshe.androidgithubcitemplate.data_classes.newchapters
 import com.google.gson.annotations.SerializedName
-import com.makentoshe.androidgithubcitemplate.data_classes.newchapters.BookmarkType
 
 data class Props(
     @SerializedName("bookmark_types")

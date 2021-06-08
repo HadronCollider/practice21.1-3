@@ -1,5 +1,4 @@
 package com.makentoshe.androidgithubcitemplate.data_classes.newchapters
-import Props
 import com.google.gson.annotations.SerializedName
 
 data class new_chapters(
