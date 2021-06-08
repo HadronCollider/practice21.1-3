@@ -4,6 +4,8 @@ package com.makentoshe.androidgithubcitemplate
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
+import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,14 +26,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+        val searchLine = findViewById<EditText>(R.id.searchTextView) // Search line TODO add search of mangas -> redirect to another Activity
+
         val recyclerView = findViewById<RecyclerView>(R.id.mainRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this,
             LinearLayoutManager.VERTICAL, false)
 
-
             getContent { content ->
                 lifecycleScope.launch(Dispatchers.Main){
-                    recyclerView.adapter = MultipleElementsAdapter(content)
+                    recyclerView.adapter = MultipleElementsAdapter(content, lifecycleScope)
                 }
             }
 
@@ -50,52 +54,17 @@ class MainActivity : AppCompatActivity() {
         }*/
     }
 
-    /*private suspend fun generateList(): List<Manga> {
-        val list = mutableListOf<Manga>()
-
-        val urls: MutableList<String> = mutableListOf(
-            "https://api.remanga.org/media/titles/military/9539534ce2ea8e6c12b4d1d81debe59f.jpg",
-            "https://get.wallhere.com/photo/hill-with-blue-river-gorgeous-beauty-of-mountain-1550789.jpg",
-            "https://w-dog.ru/wallpapers/9/1/298499341842887/osen-vodopady-kanchanaburi-provinciya-priroda-foto.jpg",
-            "https://i.imgur.com/9I23DL3.jpg",
-            "https://s1.1zoom.ru/b5050/994/260356-svetik_1920x1200.jpg",
-            "https://c.wallhere.com/photos/ab/98/lake_round_coast_sky_mountains-1064574.jpg!d",
-            "https://wallpapertag.com/wallpaper/full/3/b/a/522858-butterfly-desktop-backgrounds-1920x1200-photos.jpg",
-            //"https://www.wallpaperup.com/uploads/wallpapers/2016/10/14/1025923/403030823b8c642fbab1fe0305865aca-1000.jpg",
-            "https://c.wallhere.com/photos/40/80/1920x1200_px_bridges_forest_landscapes_Morning_nature_rivers_scenic-1783173.jpg!d",
-            "https://c.wallhere.com/photos/d3/be/pond_geese_lodges_mill_wheel_summer-1054309.jpg!d",
-        )
-
-        for (i in 0 until 9) {
-            val image = lifecycleScope.async(Dispatchers.IO){
-                Picasso.get().load(urls[i]).get()}
-            list.add(
-                Manga("manga №$i", "Any genre", urls[i], image.await()))
-        }
-        return list
-    }*/
-
-    private fun getContent(after: (list: List<Pair<String, List<BitmapMangaWrapper>>>) -> Unit){
-
+    private fun getContent(after: (list: List<Pair<String, List<Manga>>>) -> Unit){
         lifecycleScope.launch(Dispatchers.Default){
             //val mangas = getMangasNoCallback()
             val result = listOf("Top Feed",
             "Popular today",
             "Hot news",
             "New chapters").map{ articleType ->
-                Pair(articleType, getMangasNoCallback())
+                Pair(articleType, getMangasList()) // , getMangasNoCallback()
             }
             after.invoke(result)
         }
-       /* lifecycleScope.launch{
-            val result: MutableList<List<BitmapMangaWrapper>> = mutableListOf()
-            for(i in 0 until 4){
-                val mangas = getMangasNoCallback()
-                result.add(mangas)
-            }
-            after.invoke(result)
-        }*/
-
     }
 
     private fun getMangas(after: (mangas: List<BitmapMangaWrapper>) -> Unit){
@@ -122,13 +91,6 @@ class MainActivity : AppCompatActivity() {
             result.add(BitmapMangaWrapper(manga, bitmap.await()))
         }
 
-        /*list.map{ manga ->
-            lifecycleScope.launch(Dispatchers.IO){
-            val response = client.newCall(Request.Builder().url(manga.imageUrl).build()).execute()
-            val bitmap = BitmapFactory.decodeStream(response.body?.byteStream())
-            result.add(BitmapMangaWrapper(manga, bitmap))
-        }
-        }*/
         println(result)
         return result
     }

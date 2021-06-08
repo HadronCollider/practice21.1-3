@@ -1,20 +1,31 @@
 package com.makentoshe.androidgithubcitemplate
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import java.lang.Exception
 
-class MultipleElementsAdapter(private val data: List<Pair<String, List<BitmapMangaWrapper>>>)
+class MultipleElementsAdapter(private val data: List<Pair<String, List<Manga>>>,
+    private val lifecycleScope: LifecycleCoroutineScope)
     : RecyclerView.Adapter<MultipleElementsAdapter.BaseViewHolder>()  {
+
+    private val client = OkHttpClient()
 
     abstract class BaseViewHolder(itemView: View)
         : RecyclerView.ViewHolder(itemView){
-            abstract fun setContent(contentType: String, mangas: List<BitmapMangaWrapper>)
+            abstract fun setContent(contentType: String, mangas: List<Manga>,
+                                    lifecycleScope: LifecycleCoroutineScope, client: OkHttpClient)
         } // Abstract viewHolder
 
     // Its children
@@ -23,9 +34,10 @@ class MultipleElementsAdapter(private val data: List<Pair<String, List<BitmapMan
 
         val recyclerView: RecyclerView = itemView.findViewById(R.id.topFeedRecyclerView)
 
-        override fun setContent(contentType: String, mangas: List<BitmapMangaWrapper>) {
+        override fun setContent(contentType: String, mangas: List<Manga>,
+                                lifecycleScope: LifecycleCoroutineScope, client: OkHttpClient) {
             recyclerView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
-            recyclerView.adapter = TopFeedRecyclerViewAdapter(mangas)
+            recyclerView.adapter = TopFeedRecyclerViewAdapter(mangas, lifecycleScope, client)
         }
     }
 
@@ -34,12 +46,13 @@ class MultipleElementsAdapter(private val data: List<Pair<String, List<BitmapMan
 
         val layout: LinearLayout = itemView.findViewById(R.id.popularToday)
 
-        override fun setContent(contentType: String, mangas: List<BitmapMangaWrapper>) {
+        override fun setContent(contentType: String, mangas: List<Manga>,
+                                lifecycleScope: LifecycleCoroutineScope, client: OkHttpClient) {
             layout.findViewById<TextView>(R.id.popularTodayTextView).text = contentType
 
             val recyclerView = layout.findViewById<RecyclerView>(R.id.popularTodayRecyclerView)
             recyclerView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.VERTICAL, false)
-            recyclerView.adapter = PopularTodayRecyclerViewAdapter(mangas)
+            recyclerView.adapter = PopularTodayRecyclerViewAdapter(mangas, lifecycleScope, client)
         }
     }
 
@@ -48,12 +61,13 @@ class MultipleElementsAdapter(private val data: List<Pair<String, List<BitmapMan
 
         val layout: LinearLayout = itemView.findViewById(R.id.hotNews)
 
-        override fun setContent(contentType: String, mangas: List<BitmapMangaWrapper>) {
+        override fun setContent(contentType: String, mangas: List<Manga>,
+                                lifecycleScope: LifecycleCoroutineScope, client: OkHttpClient) {
             layout.findViewById<TextView>(R.id.hotNewsTextView).text = contentType
 
             val recyclerView = layout.findViewById<RecyclerView>(R.id.hotNewsRecyclerView)
             recyclerView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
-            recyclerView.adapter = HotNewsRecyclerViewAdapter(mangas)
+            recyclerView.adapter = HotNewsRecyclerViewAdapter(mangas, lifecycleScope, client)
         }
     }
 
@@ -62,12 +76,13 @@ class MultipleElementsAdapter(private val data: List<Pair<String, List<BitmapMan
 
         val layout: LinearLayout = itemView.findViewById(R.id.newChapters)
 
-        override fun setContent(contentType: String, mangas: List<BitmapMangaWrapper>) { // Add logics for CheckBox
+        override fun setContent(contentType: String, mangas: List<Manga>,
+                                lifecycleScope: LifecycleCoroutineScope, client: OkHttpClient) { // Add logics for CheckBox
             layout.findViewById<TextView>(R.id.newChaptersTextView).text = contentType
 
             val recyclerView = layout.findViewById<RecyclerView>(R.id.newChaptersRecyclerView)
             recyclerView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.VERTICAL, false)
-            recyclerView.adapter = NewChaptersRecyclerViewAdapter(mangas)
+            recyclerView.adapter = NewChaptersRecyclerViewAdapter(mangas, lifecycleScope, client)
         }
     }
 
@@ -90,12 +105,11 @@ class MultipleElementsAdapter(private val data: List<Pair<String, List<BitmapMan
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
-        holder.setContent(data[position].first, data[position].second)
+        holder.setContent(data[position].first, data[position].second, lifecycleScope, client)
     }
 
     override fun getItemCount(): Int {
         return data.size
     }
-
 
 }
