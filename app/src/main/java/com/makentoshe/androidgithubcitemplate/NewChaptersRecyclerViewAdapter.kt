@@ -8,14 +8,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 
-class HorizontalRecyclerViewAdapter(private val data: List<BitmapMangaWrapper>) :
-RecyclerView.Adapter<HorizontalRecyclerViewAdapter.TopViewHolder>(){
+class NewChaptersRecyclerViewAdapter(private val data: List<BitmapMangaWrapper>) :
+    RecyclerView.Adapter<NewChaptersRecyclerViewAdapter.TopViewHolder>(){
 
     //class that handle single element of recycler view
     class TopViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         var mangaPreviewImage: ImageView = itemView.findViewById(R.id.mangaPreviewImage)
         var mangaTitle: TextView = itemView.findViewById(R.id.mangaTitle)
-        var mangaGenre: TextView = itemView.findViewById(R.id.mangaGenre)
+        var mangaChapter: TextView = itemView.findViewById(R.id.mangaChapter)
+        var mangaPublishTime: TextView = itemView.findViewById(R.id.mangaChapterPublishTime)
     }
 
     override fun getItemCount(): Int {
@@ -24,25 +25,18 @@ RecyclerView.Adapter<HorizontalRecyclerViewAdapter.TopViewHolder>(){
 
     override fun onBindViewHolder(holder: TopViewHolder, position: Int) {
         holder.mangaTitle.text = data[position].manga.title
-        holder.mangaGenre.text = data[position].manga.genre
+        holder.mangaChapter.text = data[position].manga.genre
         holder.mangaPreviewImage.setImageBitmap(data[position].image)
+        holder.mangaPublishTime.text = "Some minutes age" // Add special structure for last chapter e.t.c.
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopViewHolder {
         val itemView =
             LayoutInflater.from(parent.context).inflate(
-                R.layout.vertical_recyclerview_item,
-            parent, false)
+                R.layout.new_chapters_recyclerview_element,
+                parent, false)
 
         return TopViewHolder(itemView)
     }
-
-    /*private fun getNewImage(image: Bitmap, screenSize: ImageSize, imagesOnScreen: Double = 2.5) : Bitmap{
-        val newImageWidth = (screenSize.width.toDouble() / imagesOnScreen - screenSize.width.toDouble() * 0.05).toInt()
-        val resizer = ImageResizer(image, newImageWidth) // 0 passed to save image ratio
-
-        return resizer.getResizedImage()
-    }*/
-
 
 }

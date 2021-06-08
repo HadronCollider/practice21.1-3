@@ -8,8 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 
-class VerticalRecyclerViewAdapter(private val data: List<BitmapMangaWrapper>) :
-    RecyclerView.Adapter<VerticalRecyclerViewAdapter.TopViewHolder>(){
+class HotNewsRecyclerViewAdapter(private val data: List<BitmapMangaWrapper>) :
+    RecyclerView.Adapter<HotNewsRecyclerViewAdapter.TopViewHolder>(){
 
     //class that handle single element of recycler view
     class TopViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -31,10 +31,18 @@ class VerticalRecyclerViewAdapter(private val data: List<BitmapMangaWrapper>) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopViewHolder {
         val itemView =
             LayoutInflater.from(parent.context).inflate(
-                R.layout.horizontal_recyclerview_item,
+                R.layout.hot_news_recyclerview_element,
                 parent, false)
 
         return TopViewHolder(itemView)
     }
+
+    /*private fun getNewImage(image: Bitmap, screenSize: ImageSize, imagesOnScreen: Double = 2.5) : Bitmap{
+        val newImageWidth = (screenSize.width.toDouble() / imagesOnScreen - screenSize.width.toDouble() * 0.05).toInt()
+        val resizer = ImageResizer(image, newImageWidth) // 0 passed to save image ratio
+
+        return resizer.getResizedImage()
+    }*/
+
 
 }

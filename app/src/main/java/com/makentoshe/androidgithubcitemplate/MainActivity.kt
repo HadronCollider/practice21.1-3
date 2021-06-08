@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
             getContent { content ->
                 lifecycleScope.launch(Dispatchers.Main){
-                    recyclerView.adapter = MainRecyclerViewAdapter(content)
+                    recyclerView.adapter = MultipleElementsAdapter(content)
                 }
             }
 
@@ -75,12 +75,15 @@ class MainActivity : AppCompatActivity() {
         return list
     }*/
 
-    private fun getContent(after: (list: List<List<BitmapMangaWrapper>>) -> Unit){
+    private fun getContent(after: (list: List<Pair<String, List<BitmapMangaWrapper>>>) -> Unit){
 
         lifecycleScope.launch(Dispatchers.Default){
-            val mangas = getMangasNoCallback()
-            val result = (0 until 4).map{
-                mangas
+            //val mangas = getMangasNoCallback()
+            val result = listOf("Top Feed",
+            "Popular today",
+            "Hot news",
+            "New chapters").map{ articleType ->
+                Pair(articleType, getMangasNoCallback())
             }
             after.invoke(result)
         }
