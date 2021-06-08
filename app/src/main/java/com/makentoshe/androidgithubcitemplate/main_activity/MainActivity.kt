@@ -8,13 +8,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.makentoshe.androidgithubcitemplate.MultipleElementsAdapter
+import com.makentoshe.androidgithubcitemplate.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import java.util.concurrent.CopyOnWriteArrayList
 
 
 class MainActivity : AppCompatActivity() {
