@@ -13,11 +13,13 @@ interface BasicMangaApi {
     @GET("/api/titles/")
     fun getLastDaysManga(
         // /api/titles/?com.makentoshe.androidgithubcitemplate.data_classes.last_days.last_days=7&ordering=-votes
-        @Query("com.makentoshe.androidgithubcitemplate.data_classes.last_days.last_days")
+        @Query("last_days")
         lastDays: Int,
         @Query("ordering")
         ordering: String?
     ): Call<ResponseBody>
+
+    @GET("/api/titles/")
     fun getTheFirstPanelManga(
         // /api/titles/?ordering=-votes&count=30
         @Query("ordering")
@@ -36,6 +38,8 @@ interface BasicMangaApi {
         @Query("count")
         count: Int?
     ): Call<ResponseBody>
+
+    @GET("/api/titles/{category}/")
     fun getDailyTop(
         // /api/titles/daily-top/?count=7
         @Path("category")
