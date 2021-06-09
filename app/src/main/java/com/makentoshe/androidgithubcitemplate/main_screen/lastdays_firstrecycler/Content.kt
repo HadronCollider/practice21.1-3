@@ -1,6 +1,6 @@
 package com.makentoshe.androidgithubcitemplate.main_screen.lastdays_firstrecycler
 import com.google.gson.annotations.SerializedName
-//
+
 data class Content(
     @SerializedName("admin_rating")
     val adminRating: String,
