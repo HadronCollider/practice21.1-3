@@ -13,11 +13,9 @@ interface MangaReaderAPI {
         manga_name: String?
     ): Call<ResponseBody>
 
-    @GET ("/api/titles/{manga_name}/similar/") // /api/titles/hes-got-three-tyrant-brothers/similar/
+    @GET ("/api/titles/{manga_name}/similar") // /api/titles/hes-got-three-tyrant-brothers/similar/
     fun getSimilarManga(
         @Path("manga_name")
         manga_name: String?
-        /*@Query("similar")
-        similar: String?*/
     ): Call<ResponseBody>
 }
