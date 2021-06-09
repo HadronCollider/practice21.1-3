@@ -20,7 +20,7 @@ interface MainScreenAPI {
     ): Call<ResponseBody>
 
     @GET("/api/titles/")
-    fun getTheFirstPanelManga(
+    fun getBestVoted(
         // /api/titles/?ordering=-votes&count=30
         @Query("ordering")
         ordering: String?,
