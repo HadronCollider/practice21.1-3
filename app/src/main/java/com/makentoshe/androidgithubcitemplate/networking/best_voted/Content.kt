@@ -1,5 +1,4 @@
-package com.makentoshe.androidgithubcitemplate.networking.basic_contents
-
+package com.makentoshe.androidgithubcitemplate.networking.best_voted
 
 import com.google.gson.annotations.SerializedName
 //

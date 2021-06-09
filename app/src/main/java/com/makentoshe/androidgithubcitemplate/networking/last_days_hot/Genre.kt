@@ -1,4 +1,5 @@
-package com.makentoshe.androidgithubcitemplate.networking.basic_contents
+package com.makentoshe.androidgithubcitemplate.networking.last_days_hot
+
 
 import com.google.gson.annotations.SerializedName
 
