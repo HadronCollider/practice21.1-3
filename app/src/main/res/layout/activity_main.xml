@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     tools:context=".main_activity.MainActivity"> <!-- android:background="@color/backgroundMain" -->
 
     <androidx.recyclerview.widget.RecyclerView
@@ -38,7 +38,8 @@
             app:layout_constraintBottom_toTopOf="@+id/mainRecyclerView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" /> <!-- android:background="@color/backgroundSearch" -->
+            app:layout_constraintTop_toTopOf="parent"
+            android:inputType="text"/> <!-- android:background="@color/backgroundSearch" -->
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

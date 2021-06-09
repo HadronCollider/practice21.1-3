@@ -26,9 +26,12 @@
         android:id="@+id/mangaTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:ellipsize="end"
         android:maxWidth="120dp"
-        tools:text="LargeText"/>
+        android:maxLines="2"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="20sp"
+        tools:text="LargeText" />
 
     <TextView
         android:id="@+id/mangaGenre"
@@ -36,5 +39,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:maxWidth="120dp"
-        tools:text="SmallText"/>
+        tools:text="SmallText"
+        android:maxLines="1"
+        android:ellipsize="end"/>
 </LinearLayout>
