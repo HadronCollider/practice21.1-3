@@ -9,26 +9,31 @@ import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.androidgithubcitemplate.R
+import com.makentoshe.androidgithubcitemplate.networking.MainPageNetworkHandler
 import okhttp3.OkHttpClient
 
-class MultipleElementsAdapter(private val data: List<Pair<String, List<Manga>>>,
-                              private val lifecycleScope: LifecycleCoroutineScope)
-    : RecyclerView.Adapter<MultipleElementsAdapter.BaseViewHolder>()  {
+class MultipleElementsAdapter(private val lifecycleScope: LifecycleCoroutineScope)
+    : RecyclerView.Adapter<MultipleElementsAdapter.SuperBaseViewHolder>()  {
 
     private val client = OkHttpClient()
+    private val networkHandler = MainPageNetworkHandler(client, lifecycleScope)
 
-    abstract class BaseViewHolder(itemView: View,
-                                  protected val lifecycleScope: LifecycleCoroutineScope,
-                                  protected val client: OkHttpClient)
-        : RecyclerView.ViewHolder(itemView){
-            abstract fun setContent(contentType: String, mangas: List<Manga>)
+    abstract class SuperBaseViewHolder(itemView: View,
+                                       protected val lifecycleScope: LifecycleCoroutineScope,
+                                       protected val client: OkHttpClient) : RecyclerView.ViewHolder(itemView)
+
+    abstract class BaseViewHolder<MangaType>(itemView: View,
+                                  lifecycleScope: LifecycleCoroutineScope,
+                                  client: OkHttpClient) : SuperBaseViewHolder(itemView, lifecycleScope, client)
+        {
+            abstract fun setContent(contentType: String, mangas: List<MangaType>)
         } // Abstract viewHolder
 
     // Its children
     class TopFeedViewHolder(itemView: View,
                             lifecycleScope: LifecycleCoroutineScope,
                             client: OkHttpClient)
-        : BaseViewHolder(itemView, lifecycleScope, client){
+        : BaseViewHolder<Manga>(itemView, lifecycleScope, client){
 
         private val recyclerView: RecyclerView = itemView.findViewById(R.id.bestVotedRecyclerView)
 
@@ -41,7 +46,7 @@ class MultipleElementsAdapter(private val data: List<Pair<String, List<Manga>>>,
     class PopularTodayViewHolder(itemView: View,
                                  lifecycleScope: LifecycleCoroutineScope,
                                  client: OkHttpClient)
-        : BaseViewHolder(itemView, lifecycleScope, client){
+        : BaseViewHolder<Manga>(itemView, lifecycleScope, client){
 
         private val layout: LinearLayout = itemView.findViewById(R.id.popularToday)
 
@@ -57,7 +62,7 @@ class MultipleElementsAdapter(private val data: List<Pair<String, List<Manga>>>,
     class HotNewsViewHolder(itemView: View,
                             lifecycleScope: LifecycleCoroutineScope,
                             client: OkHttpClient)
-        : BaseViewHolder(itemView, lifecycleScope, client){
+        : BaseViewHolder<Manga>(itemView, lifecycleScope, client){
 
         private val layout: LinearLayout = itemView.findViewById(R.id.hotNews)
 
@@ -73,11 +78,11 @@ class MultipleElementsAdapter(private val data: List<Pair<String, List<Manga>>>,
     class NewChaptersViewHolder(itemView: View,
                                 lifecycleScope: LifecycleCoroutineScope,
                                 client: OkHttpClient)
-        : BaseViewHolder(itemView, lifecycleScope, client){
+        : BaseViewHolder<MangaNewChapter>(itemView, lifecycleScope, client){
 
         private val layout: LinearLayout = itemView.findViewById(R.id.newChapters)
 
-        override fun setContent(contentType: String, mangas: List<Manga>) { // Add logics for CheckBox
+        override fun setContent(contentType: String, mangas: List<MangaNewChapter>) { // Add logics for CheckBox
             layout.findViewById<TextView>(R.id.newChaptersTextView).text = contentType
 
             val recyclerView = layout.findViewById<RecyclerView>(R.id.newChaptersRecyclerView)
@@ -91,7 +96,7 @@ class MultipleElementsAdapter(private val data: List<Pair<String, List<Manga>>>,
         return position // position specifies which ViewHolder wil be used
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SuperBaseViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             0 -> TopFeedViewHolder(
@@ -104,12 +109,17 @@ class MultipleElementsAdapter(private val data: List<Pair<String, List<Manga>>>,
         }
     }
 
-    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
-        holder.setContent(data[position].first, data[position].second)
+    override fun onBindViewHolder(holder: SuperBaseViewHolder, position: Int) {
+            when(position){
+                0 -> networkHandler.getBestVotedManga{ mangas -> (holder as BaseViewHolder<Manga>).setContent("Лучшие оценки", mangas)}
+                1 -> networkHandler.getDailyTopManga{mangas -> (holder as BaseViewHolder<Manga>).setContent("Популярно сегодня", mangas)}
+                2 -> networkHandler.getLastDaysHotManga{ mangas -> (holder as BaseViewHolder<Manga>).setContent("Горячие новинки", mangas)}
+                3 -> networkHandler.getNewChapters{ mangas -> (holder as BaseViewHolder<MangaNewChapter>).setContent("Новые главы", mangas)}
+            }
     }
 
     override fun getItemCount(): Int {
-        return data.size
+        return 4
     }
 
 }

@@ -11,7 +11,7 @@ import retrofit2.http.Query
 
 interface MainScreenAPI {
     @GET("/api/titles/")
-    fun getLastDaysManga(
+    fun getLastDaysHotManga(
         // /api/titles/?last_days=7&ordering=-votes
         @Query("last_days")
         lastDays: Int = 7,
@@ -25,7 +25,7 @@ interface MainScreenAPI {
         @Query("ordering")
         ordering: String? = "-votes",
         @Query("count")
-        count: Int? = 7
+        count: Int? = 30
     ): Call<ResponseBody>
 
     @GET("/api/titles/{category}/")

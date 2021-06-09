@@ -27,6 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:maxWidth="120dp"
         tools:text="LargeText"/>
 
     <TextView
@@ -34,5 +35,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
+        android:maxWidth="120dp"
         tools:text="SmallText"/>
 </LinearLayout>

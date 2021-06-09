@@ -25,13 +25,15 @@ class MainActivity : AppCompatActivity() {
         //val searchLine = findViewById<EditText>(R.id.searchTextView) // Search line TODO add search of mangas -> redirect to another Activity
 
 
-        lifecycleScope.launch(Dispatchers.IO){
-            val networkHandler = MainPageNetworkHandler(client)
-            networkHandler.getLastDaysHotManga().forEach{ manga ->
-                println(manga)
-            }
 
-        }
+  /*          val networkHandler = MainPageNetworkHandler(client, lifecycleScope)
+            networkHandler.getLastDaysHotManga{ manga ->
+                manga.forEach{ manga ->
+                    println(manga)
+                }
+            }*/
+
+
 
         val recyclerView = findViewById<RecyclerView>(R.id.mainRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this,
@@ -39,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
             getContent { content ->
                 lifecycleScope.launch(Dispatchers.Main){
-                    recyclerView.adapter = MultipleElementsAdapter(content, lifecycleScope)
+                    recyclerView.adapter = MultipleElementsAdapter(lifecycleScope)
                 }
             }
 

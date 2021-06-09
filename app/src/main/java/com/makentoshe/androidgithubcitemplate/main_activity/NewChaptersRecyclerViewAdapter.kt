@@ -16,7 +16,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 
 
-class NewChaptersRecyclerViewAdapter(private val data: List<Manga>,
+class NewChaptersRecyclerViewAdapter(private val data: List<MangaNewChapter>,
                                      private val lifecycleCoroutineScope: LifecycleCoroutineScope,
                                      private val client: OkHttpClient) :
     RecyclerView.Adapter<NewChaptersRecyclerViewAdapter.TopViewHolder>(){
@@ -37,12 +37,13 @@ class NewChaptersRecyclerViewAdapter(private val data: List<Manga>,
 
     override fun onBindViewHolder(holder: TopViewHolder, position: Int) {
         holder.mangaTitle.text = data[position].title
-        holder.mangaChapter.text = data[position].genre
+        holder.mangaChapter.text = data[position].chapter
+        holder.mangaPublishTime.text = makeUploadDate(data[position].uploadDate) // Add special structure for last chapter e.t.c.
 
         getMangaImage(data[position].imageUrl){ bitmap ->
             holder.mangaPreviewImage.setImageBitmap(bitmap)
         }
-        holder.mangaPublishTime.text = "Some minutes age" // Add special structure for last chapter e.t.c.
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopViewHolder {
@@ -72,6 +73,10 @@ class NewChaptersRecyclerViewAdapter(private val data: List<Manga>,
                 println(response.message)
             }
         }
+    }
+
+    private fun makeUploadDate(millis: Int): String{
+        return "${millis / (1000 * 60)} minutes ago"
     }
 
 }
