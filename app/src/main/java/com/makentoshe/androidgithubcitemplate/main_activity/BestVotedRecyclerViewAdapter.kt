@@ -16,10 +16,11 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 
 
-class HotNewsRecyclerViewAdapter(private val data: List<Manga>,
-                                 private val lifecycleScope: LifecycleCoroutineScope,
-                                 private val client: OkHttpClient) :
-    RecyclerView.Adapter<HotNewsRecyclerViewAdapter.TopViewHolder>(){
+class BestVotedRecyclerViewAdapter(private val data: List<Manga>,
+                                   private val lifecycleScope: LifecycleCoroutineScope,
+                                   private val client: OkHttpClient
+) :
+RecyclerView.Adapter<BestVotedRecyclerViewAdapter.TopViewHolder>(){
 
     private val cache  = HashMap<String, Bitmap>()
 
@@ -45,8 +46,8 @@ class HotNewsRecyclerViewAdapter(private val data: List<Manga>,
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopViewHolder {
         val itemView =
             LayoutInflater.from(parent.context).inflate(
-                R.layout.hot_news_recyclerview_element,
-                parent, false)
+                R.layout.best_voted_recyclerview_element,
+            parent, false)
 
         return TopViewHolder(itemView)
     }

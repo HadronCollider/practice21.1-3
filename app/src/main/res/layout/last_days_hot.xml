@@ -8,7 +8,7 @@
     android:layout_margin="10dp">
 
     <TextView
-        android:id="@+id/hotNewsTextView"
+        android:id="@+id/lastDaysHotTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="Hot news"
@@ -17,7 +17,7 @@
         android:layout_marginLeft="15dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/hotNewsRecyclerView"
+        android:id="@+id/lastDaysHotRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

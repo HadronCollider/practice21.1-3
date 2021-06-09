@@ -16,23 +16,6 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_marginLeft="15dp"/>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="5dp">
-    <TextView
-        android:id="@+id/newChaptersCheckBoxContent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Only my bookmarks" />
-    <CheckBox
-        android:id="@+id/newChaptersOnlyMyBookmarksCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checked="false"/>
-    </LinearLayout>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/newChaptersRecyclerView"
         android:layout_width="match_parent"

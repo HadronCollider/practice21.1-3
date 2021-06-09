@@ -12,13 +12,13 @@
         android:id="@+id/popularTodayTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Popular today"
+        android:text="Daily top"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="15dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/popularTodayRecyclerView"
+        android:id="@+id/dailyTopRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

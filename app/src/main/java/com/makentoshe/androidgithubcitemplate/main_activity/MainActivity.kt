@@ -1,19 +1,16 @@
 package com.makentoshe.androidgithubcitemplate.main_activity
 
 
-import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.androidgithubcitemplate.R
+import com.makentoshe.androidgithubcitemplate.networking.MainPageNetworkHandler
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
-import okhttp3.Request
 
 
 class MainActivity : AppCompatActivity() {
@@ -25,7 +22,16 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        val searchLine = findViewById<EditText>(R.id.searchTextView) // Search line TODO add search of mangas -> redirect to another Activity
+        //val searchLine = findViewById<EditText>(R.id.searchTextView) // Search line TODO add search of mangas -> redirect to another Activity
+
+
+        lifecycleScope.launch(Dispatchers.IO){
+            val networkHandler = MainPageNetworkHandler(client)
+            networkHandler.getLastDaysHotManga().forEach{ manga ->
+                println(manga)
+            }
+
+        }
 
         val recyclerView = findViewById<RecyclerView>(R.id.mainRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this,
@@ -37,27 +43,14 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-
-
-        /*val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-
-        recyclerView.layoutManager = LinearLayoutManager(this,
-            LinearLayoutManager.HORIZONTAL, false)
-
-
-        getMangas{mangas ->
-            lifecycleScope.launch(Dispatchers.Main){
-                recyclerView.adapter = TopRecyclerViewAdapter(mangas)
-            }
-        }*/
     }
 
     private fun getContent(after: (list: List<Pair<String, List<Manga>>>) -> Unit){
         lifecycleScope.launch(Dispatchers.Default){
             //val mangas = getMangasNoCallback()
-            val result = listOf("Top Feed",
-            "Popular today",
-            "Hot news",
+            val result = listOf("Best voted",
+            "Daily top",
+            "Last days popular",
             "New chapters").map{ articleType ->
                 Pair(articleType, getMangasList()) // , getMangasNoCallback()
             }
@@ -65,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getMangas(after: (mangas: List<BitmapMangaWrapper>) -> Unit){
+    /*private fun getMangas(after: (mangas: List<BitmapMangaWrapper>) -> Unit){
         val list = getMangasList()
         lifecycleScope.launch(Dispatchers.IO){
             val mangas = list.map{ manga ->
@@ -91,7 +84,7 @@ class MainActivity : AppCompatActivity() {
 
         println(result)
         return result
-    }
+    }*/
 
     private fun getMangasList(): List<Manga> = listOf(
         "https://api.remanga.org/media/titles/military/9539534ce2ea8e6c12b4d1d81debe59f.jpg",
@@ -104,17 +97,6 @@ class MainActivity : AppCompatActivity() {
         "https://api.remanga.org/media/titles/i-was-caught-up-in-a-hero-summoning-but-that-world-is-at-peace/mid_cover.jpg",
         "https://api.remanga.org/media/titles/i-will-just-live-as-a-villain/dee052adaba1b4028ae2938b9b975252.jpg"
     ).mapIndexed { index, url -> Manga("manga №$index", "Any genre", url) }
-
-
-    /*private fun getScreenSize(): ImageSize{
-        val displayMetrics = DisplayMetrics()
-        val windowsManager = applicationContext.getSystemService(WINDOW_SERVICE) as WindowManager
-
-        windowsManager.defaultDisplay.getMetrics(displayMetrics)
-        Log.d("SCREEN_METRICS", "${displayMetrics.widthPixels}x${displayMetrics.heightPixels}")
-
-        return ImageSize(displayMetrics.widthPixels, displayMetrics.heightPixels)
-    }*/
 
 }
 

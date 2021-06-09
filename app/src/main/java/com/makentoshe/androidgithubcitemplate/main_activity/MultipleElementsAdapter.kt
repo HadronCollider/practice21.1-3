@@ -30,11 +30,11 @@ class MultipleElementsAdapter(private val data: List<Pair<String, List<Manga>>>,
                             client: OkHttpClient)
         : BaseViewHolder(itemView, lifecycleScope, client){
 
-        private val recyclerView: RecyclerView = itemView.findViewById(R.id.topFeedRecyclerView)
+        private val recyclerView: RecyclerView = itemView.findViewById(R.id.bestVotedRecyclerView)
 
         override fun setContent(contentType: String, mangas: List<Manga>) {
             recyclerView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
-            recyclerView.adapter = TopFeedRecyclerViewAdapter(mangas, lifecycleScope, client)
+            recyclerView.adapter = BestVotedRecyclerViewAdapter(mangas, lifecycleScope, client)
         }
     }
 
@@ -48,9 +48,9 @@ class MultipleElementsAdapter(private val data: List<Pair<String, List<Manga>>>,
         override fun setContent(contentType: String, mangas: List<Manga>) {
             layout.findViewById<TextView>(R.id.popularTodayTextView).text = contentType
 
-            val recyclerView = layout.findViewById<RecyclerView>(R.id.popularTodayRecyclerView)
+            val recyclerView = layout.findViewById<RecyclerView>(R.id.dailyTopRecyclerView)
             recyclerView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.VERTICAL, false)
-            recyclerView.adapter = PopularTodayRecyclerViewAdapter(mangas, lifecycleScope, client)
+            recyclerView.adapter = DailyTopRecyclerViewAdapter(mangas, lifecycleScope, client)
         }
     }
 
@@ -62,11 +62,11 @@ class MultipleElementsAdapter(private val data: List<Pair<String, List<Manga>>>,
         private val layout: LinearLayout = itemView.findViewById(R.id.hotNews)
 
         override fun setContent(contentType: String, mangas: List<Manga>) {
-            layout.findViewById<TextView>(R.id.hotNewsTextView).text = contentType
+            layout.findViewById<TextView>(R.id.lastDaysHotTextView).text = contentType
 
-            val recyclerView = layout.findViewById<RecyclerView>(R.id.hotNewsRecyclerView)
+            val recyclerView = layout.findViewById<RecyclerView>(R.id.lastDaysHotRecyclerView)
             recyclerView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
-            recyclerView.adapter = HotNewsRecyclerViewAdapter(mangas, lifecycleScope, client)
+            recyclerView.adapter = LastDaysHotRecyclerViewAdapter(mangas, lifecycleScope, client)
         }
     }
 
@@ -95,10 +95,10 @@ class MultipleElementsAdapter(private val data: List<Pair<String, List<Manga>>>,
         val layoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             0 -> TopFeedViewHolder(
-                layoutInflater.inflate(R.layout.top_feed_recyclerview, parent,false), lifecycleScope, client)
+                layoutInflater.inflate(R.layout.best_voted_recyclerview, parent,false), lifecycleScope, client)
             1 -> PopularTodayViewHolder(
-                layoutInflater.inflate(R.layout.popular_today, parent,false), lifecycleScope, client)
-            2 -> HotNewsViewHolder(layoutInflater.inflate(R.layout.hot_news, parent, false), lifecycleScope, client)
+                layoutInflater.inflate(R.layout.daily_top, parent,false), lifecycleScope, client)
+            2 -> HotNewsViewHolder(layoutInflater.inflate(R.layout.last_days_hot, parent, false), lifecycleScope, client)
             3 -> NewChaptersViewHolder(layoutInflater.inflate(R.layout.new_chapters, parent, false), lifecycleScope, client)
             else -> throw Exception("Wrong main page element!")
         }

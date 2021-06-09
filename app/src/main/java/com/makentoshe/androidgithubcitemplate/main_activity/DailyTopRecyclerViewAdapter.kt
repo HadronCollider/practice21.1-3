@@ -16,11 +16,10 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 
 
-class TopFeedRecyclerViewAdapter(private val data: List<Manga>,
-                                 private val lifecycleScope: LifecycleCoroutineScope,
-                                 private val client: OkHttpClient
-) :
-RecyclerView.Adapter<TopFeedRecyclerViewAdapter.TopViewHolder>(){
+class DailyTopRecyclerViewAdapter(private val data: List<Manga>,
+                                  private val lifecycleScope: LifecycleCoroutineScope,
+                                  private val client: OkHttpClient):
+    RecyclerView.Adapter<DailyTopRecyclerViewAdapter.TopViewHolder>(){
 
     private val cache  = HashMap<String, Bitmap>()
 
@@ -28,7 +27,7 @@ RecyclerView.Adapter<TopFeedRecyclerViewAdapter.TopViewHolder>(){
     class TopViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         var mangaPreviewImage: ImageView = itemView.findViewById(R.id.mangaPreviewImage)
         var mangaTitle: TextView = itemView.findViewById(R.id.mangaTitle)
-        var mangaGenre: TextView = itemView.findViewById(R.id.mangaGenre)
+        var mangaTypeAndYear: TextView = itemView.findViewById(R.id.mangaTypeAndYear)
     }
 
     override fun getItemCount(): Int {
@@ -37,7 +36,7 @@ RecyclerView.Adapter<TopFeedRecyclerViewAdapter.TopViewHolder>(){
 
     override fun onBindViewHolder(holder: TopViewHolder, position: Int) {
         holder.mangaTitle.text = data[position].title
-        holder.mangaGenre.text = data[position].genre
+        holder.mangaTypeAndYear.text = data[position].genre
         getMangaImage(data[position].imageUrl){ bitmap ->
             holder.mangaPreviewImage.setImageBitmap(bitmap)
         }
@@ -46,8 +45,8 @@ RecyclerView.Adapter<TopFeedRecyclerViewAdapter.TopViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopViewHolder {
         val itemView =
             LayoutInflater.from(parent.context).inflate(
-                R.layout.top_feed_recyclerview_element,
-            parent, false)
+                R.layout.daily_top_recyclerview_element,
+                parent, false)
 
         return TopViewHolder(itemView)
     }
@@ -71,6 +70,5 @@ RecyclerView.Adapter<TopFeedRecyclerViewAdapter.TopViewHolder>(){
             }
         }
     }
-
 
 }

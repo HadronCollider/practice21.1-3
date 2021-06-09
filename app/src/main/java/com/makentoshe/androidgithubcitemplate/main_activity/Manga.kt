@@ -4,4 +4,4 @@ import android.graphics.Bitmap
 
 
 data class Manga(val title: String, val genre: String, val imageUrl: String)
-data class BitmapMangaWrapper(val manga: Manga, val image: Bitmap)
+data class MangaNewChapter(val title: String, val chapter: String, val uploadDate: Int) // uploadDate - millis ago chapter was published
