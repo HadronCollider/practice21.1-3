@@ -14,38 +14,37 @@ interface MainScreenAPI {
     fun getLastDaysManga(
         // /api/titles/?com.makentoshe.androidgithubcitemplate.main_screen.data_classes.last_days.last_days=7&ordering=-votes
         @Query("last_days")
-        lastDays: Int,
+        lastDays: Int = 7,
         @Query("ordering")
-        ordering: String?
+        ordering: String = "-votes"
     ): Call<ResponseBody>
 
     @GET("/api/titles/")
     fun getBestVoted(
         // /api/titles/?ordering=-votes&count=30
         @Query("ordering")
-        ordering: String?,
+        ordering: String = "-votes",
         @Query("count")
-        count: Int?
+        count: Int = 30
     ): Call<ResponseBody>
 
     @GET("/api/titles/{category}/")
     fun getNewChapters(
         // /api/titles/last-chapters/?page=1&count=40
         @Path("category")
-        category: String,
+        category: String = "last-chapters",
         @Query("page")
-        page: Int,
+        page: Int = 1,
         @Query("count")
-        count: Int?
+        count: Int = 40
     ): Call<ResponseBody>
 
     @GET("/api/titles/{category}/")
     fun getDailyTop(
         // /api/titles/daily-top/?count=7
         @Path("category")
-        category: String,
+        category: String = "daily-top",
         @Query("count")
-        count: Int?
-
+        count: Int = 7
     ): Call<ResponseBody>
 }
