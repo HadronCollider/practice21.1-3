@@ -16,7 +16,7 @@ interface Chapters {
     @GET("/api/titles/chapters/{chapter_id}/") // /api/titles/chapters/494643/
     fun getOneChapter(
         @Path("chapter_id") // first chapter's id can also be taken from manga's json
-        chapter_id: String?
+        chapter_id: Int?
     ): Call<ResponseBody>
 
     @GET("/api/activity/comments/") // /api/activity/comments/?chapter_id=494643&chapter_page=-1&page=1&ordering=-id
