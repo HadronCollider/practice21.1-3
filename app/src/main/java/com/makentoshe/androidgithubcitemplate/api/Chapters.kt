@@ -22,7 +22,7 @@ interface Chapters {
     @GET("/api/activity/comments/") // /api/activity/comments/?chapter_id=494643&chapter_page=-1&page=1&ordering=-id
     fun getChapterComments(
         @Query("chapter_id")
-        chapter_id: String,
+        chapter_id: Int,
         @Query("chapter_page")
         chapter_page: Int = -1,
         @Query("page")
