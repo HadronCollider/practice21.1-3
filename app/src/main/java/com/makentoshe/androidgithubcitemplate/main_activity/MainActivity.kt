@@ -2,12 +2,11 @@ package com.makentoshe.androidgithubcitemplate.main_activity
 
 
 import android.os.Bundle
+import android.util.DisplayMetrics
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.tabs.TabLayout
 import com.makentoshe.androidgithubcitemplate.R
-import com.makentoshe.androidgithubcitemplate.networking.MainPageNetworkHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
@@ -19,31 +18,28 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_manga_main_page)
 
+        val tabLayout = findViewById<TabLayout>(R.id.mainTabLayout)
 
         //val searchLine = findViewById<EditText>(R.id.searchTextView) // Search line TODO add search of mangas -> redirect to another Activity
 
-
-
-  /*          val networkHandler = MainPageNetworkHandler(client, lifecycleScope)
+        /*val networkHandler = MainPageNetworkHandler(client, lifecycleScope)
             networkHandler.getLastDaysHotManga{ manga ->
                 manga.forEach{ manga ->
                     println(manga)
                 }
-            }*/
-
-
+            }
 
         val recyclerView = findViewById<RecyclerView>(R.id.mainRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this,
             LinearLayoutManager.VERTICAL, false)
 
-            getContent { content ->
-                lifecycleScope.launch(Dispatchers.Main){
-                    recyclerView.adapter = MultipleElementsAdapter(lifecycleScope)
-                }
+        getContent { content ->
+            lifecycleScope.launch(Dispatchers.Main){
+                recyclerView.adapter = MultipleElementsAdapter(lifecycleScope)
             }
+        }*/
 
     }
 

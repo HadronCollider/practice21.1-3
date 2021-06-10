@@ -9,7 +9,7 @@ import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.androidgithubcitemplate.R
-import com.makentoshe.androidgithubcitemplate.networking.MainPageNetworkHandler
+import com.makentoshe.androidgithubcitemplate.main_activity.networking.MainPageNetworkHandler
 import okhttp3.OkHttpClient
 
 class MultipleElementsAdapter(private val lifecycleScope: LifecycleCoroutineScope)

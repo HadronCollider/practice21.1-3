@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.androidgithubcitemplate.R
+import com.makentoshe.androidgithubcitemplate.main_activity.networking.MainPageNetworkHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
@@ -22,6 +23,7 @@ class NewChaptersRecyclerViewAdapter(private val data: List<MangaNewChapter>,
     RecyclerView.Adapter<NewChaptersRecyclerViewAdapter.TopViewHolder>(){
 
     private val cache  = HashMap<String, Bitmap>()
+    private val networkHandler = MainPageNetworkHandler(OkHttpClient(), lifecycleCoroutineScope) // TODO add pagination
 
     //class that handle single element of recycler view
     class TopViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
