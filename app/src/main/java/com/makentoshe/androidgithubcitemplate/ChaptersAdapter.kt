@@ -25,7 +25,8 @@ class ChaptersAdapter(
 
         chapter_title.text = Items[position].Title
         chapter_subtitle.text = Items[position].Subtitle
-        image.setImageDrawable(ctx.resources.getDrawable(Items[position].Img))
+        image.setImageResource(Items[position].Img)
+        // image.setImageDrawable(ctx.resources.getDrawable(Items[position].Img))
 
         return view
     }
