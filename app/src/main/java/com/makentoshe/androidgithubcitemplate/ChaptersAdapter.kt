@@ -7,30 +7,44 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
-
-class ChaptersAdapter(
-    var ctx: Context,
-    var ressourse: Int,
-    var Items: ArrayList<Chapter>
-) : ArrayAdapter<Chapter>(ctx, ressourse, Items) {
+import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
 
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val layoutInflater = LayoutInflater.from(ctx)
-        val view = layoutInflater.inflate(ressourse, null)
+class ChaptersAdapter(private val dataSet: ArrayList<Chapter>) :
+    RecyclerView.Adapter<ChaptersAdapter.ViewHolder>() {
 
-        val chapter_title: TextView = view.findViewById<TextView>(R.id.title)
-        val chapter_subtitle: TextView = view.findViewById<TextView>(R.id.subtitle)
-        val number_of_chapter: TextView = view.findViewById<TextView>(R.id.num)
+    /**
+     * Provide a reference to the type of views that you are using
+     * (custom ViewHolder).
+     */
+    inner class ViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview) {
+        val chapter_title: TextView = itemview.findViewById<TextView>(R.id.title)
+        val chapter_subtitle: TextView = itemview.findViewById<TextView>(R.id.subtitle)
+        val number_of_chapter: TextView = itemview.findViewById<TextView>(R.id.num)
 
-        chapter_title.text = Items[position].Title
-        chapter_subtitle.text = Items[position].Subtitle
-        number_of_chapter.text = Items[position].Num
-
-        // image.setImageDrawable(ctx.resources.getDrawable(Items[position].Img))
-
-        return view
     }
 
+    // Create new views (invoked by the layout manager)
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
+
+        val v = LayoutInflater.from(viewGroup.context).inflate(R.layout.row, viewGroup, false)
+
+        return ViewHolder(v)
+    }
+
+    // Replace the contents of a view (invoked by the layout manager)
+    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
+        viewHolder.chapter_title.text = dataSet[position].Title
+        viewHolder.chapter_subtitle.text = dataSet[position].Subtitle
+        viewHolder.number_of_chapter.text = dataSet[position].Num
+
+    }
+
+    // Return the size of your dataset (invoked by the layout manager)
+    override fun getItemCount() = dataSet.size
 
 }
+
+
+
