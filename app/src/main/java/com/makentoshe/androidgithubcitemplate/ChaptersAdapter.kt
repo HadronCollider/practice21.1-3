@@ -21,11 +21,12 @@ class ChaptersAdapter(
 
         val chapter_title: TextView = view.findViewById<TextView>(R.id.title)
         val chapter_subtitle: TextView = view.findViewById<TextView>(R.id.subtitle)
-        val image: ImageView = view.findViewById<ImageView>(R.id.img)
+        val number_of_chapter: TextView = view.findViewById<TextView>(R.id.num)
 
         chapter_title.text = Items[position].Title
         chapter_subtitle.text = Items[position].Subtitle
-        image.setImageResource(Items[position].Img)
+        number_of_chapter.text = Items[position].Num
+
         // image.setImageDrawable(ctx.resources.getDrawable(Items[position].Img))
 
         return view
