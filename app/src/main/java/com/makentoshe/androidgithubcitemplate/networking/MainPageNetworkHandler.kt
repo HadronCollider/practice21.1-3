@@ -1,5 +1,6 @@
 package com.makentoshe.androidgithubcitemplate.networking
 
+import android.accounts.NetworkErrorException
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.google.gson.Gson
 import com.makentoshe.androidgithubcitemplate.api.MainScreenAPI
@@ -12,6 +13,8 @@ import com.makentoshe.androidgithubcitemplate.networking.new_chapters.NewChapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
+import okhttp3.ResponseBody
+import retrofit2.Response
 import retrofit2.Retrofit
 
 class MainPageNetworkHandler(client: OkHttpClient, private val lifecycleCoroutineScope: LifecycleCoroutineScope) {
@@ -22,9 +25,18 @@ class MainPageNetworkHandler(client: OkHttpClient, private val lifecycleCoroutin
         api = retrofit.create(MainScreenAPI::class.java)
     }
 
+    private fun checkStatusCode(response:  Response<ResponseBody>): Boolean{
+        return response.code() == 200
+    }
+
     fun getBestVotedManga(after: (mangas: List<Manga>) -> Unit) {
         lifecycleCoroutineScope.launch(Dispatchers.IO) {
             val response = api.getBestVotedManga().execute()
+
+            if(!checkStatusCode(response)){
+                throw NetworkErrorException("Request failed: status code: ${response.code()}")
+            }
+
             val json = response.body()?.string()
             val contents = gson.fromJson(json, BestVoted::class.java)
 
@@ -41,6 +53,10 @@ class MainPageNetworkHandler(client: OkHttpClient, private val lifecycleCoroutin
     fun getDailyTopManga(after: (mangas: List<Manga>) -> Unit) {
         lifecycleCoroutineScope.launch(Dispatchers.IO) {
             val response = api.getDailyTop().execute()
+            if(!checkStatusCode(response)){
+                throw NetworkErrorException("Request failed: status code: ${response.code()}")
+            }
+
             val json = response.body()?.string()
             val contents = gson.fromJson(json, DailyTop::class.java)
 
@@ -57,6 +73,10 @@ class MainPageNetworkHandler(client: OkHttpClient, private val lifecycleCoroutin
     fun getLastDaysHotManga(after: (mangas: List<Manga>) -> Unit) {
         lifecycleCoroutineScope.launch(Dispatchers.IO){
             val response = api.getLastDaysHotManga().execute()
+            if(!checkStatusCode(response)){
+                throw NetworkErrorException("Request failed: status code: ${response.code()}")
+            }
+
             val json = response.body()?.string()
             val contents = gson.fromJson(json, LastDaysHot::class.java)
 
@@ -73,6 +93,10 @@ class MainPageNetworkHandler(client: OkHttpClient, private val lifecycleCoroutin
     fun getNewChapters(after: (mangas: List<MangaNewChapter>) -> Unit) {
         lifecycleCoroutineScope.launch(Dispatchers.IO) {
             val response = api.getNewChapters().execute()
+            if(!checkStatusCode(response)){
+                throw NetworkErrorException("Request failed: status code: ${response.code()}")
+            }
+
             val json = response.body()?.string()
             val contents = gson.fromJson(json, NewChapters::class.java)
 
