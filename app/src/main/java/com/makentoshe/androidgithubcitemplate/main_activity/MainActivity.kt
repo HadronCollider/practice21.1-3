@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
+import com.google.android.material.tabs.TabLayout
 import com.makentoshe.androidgithubcitemplate.R
 import com.makentoshe.androidgithubcitemplate.main_activity.networking.MainPageNetworkHandler
 import com.makentoshe.androidgithubcitemplate.manga_main_page_activity.*
@@ -20,12 +22,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
 
-        //val searchLine = findViewById<EditText>(R.id.searchTextView) // Search line TODO add search of mangas -> redirect to another Activity
-
         val networkHandler = MainPageNetworkHandler(client, lifecycleScope)
-
 
         val recyclerView = findViewById<RecyclerView>(R.id.mainRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this,
@@ -36,6 +36,14 @@ class MainActivity : AppCompatActivity() {
                 recyclerView.adapter = MultipleElementsAdapter(lifecycleScope)
             }
         }
+
+        /*setContentView(R.layout.activity_manga_main_page)
+
+        val pager = findViewById<ViewPager>(R.id.viewPager)
+        pager.adapter = ViewPagerAdapter(supportFragmentManager,lifecycleScope, makeDescription(), getChaptersList(), (0..10).map{i-> "Comment №$i"})
+
+        val tabLayout = findViewById<TabLayout>(R.id.mainTabLayout)
+        tabLayout.setupWithViewPager(pager)*/
 
     }
 
