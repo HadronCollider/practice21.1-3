@@ -31,13 +31,11 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this,
             LinearLayoutManager.VERTICAL, false)
 
-        /*
-
         getContent { content ->
             lifecycleScope.launch(Dispatchers.Main){
                 recyclerView.adapter = MultipleElementsAdapter(lifecycleScope)
             }
-        }*/
+        }
 
     }
 
