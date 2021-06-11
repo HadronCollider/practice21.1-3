@@ -2,11 +2,13 @@ package com.makentoshe.androidgithubcitemplate.main_activity
 
 
 import android.os.Bundle
-import android.util.DisplayMetrics
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.tabs.TabLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.androidgithubcitemplate.R
+import com.makentoshe.androidgithubcitemplate.main_activity.networking.MainPageNetworkHandler
+import com.makentoshe.androidgithubcitemplate.manga_main_page_activity.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
@@ -18,22 +20,18 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_manga_main_page)
-
-        val tabLayout = findViewById<TabLayout>(R.id.mainTabLayout)
+        setContentView(R.layout.activity_main)
 
         //val searchLine = findViewById<EditText>(R.id.searchTextView) // Search line TODO add search of mangas -> redirect to another Activity
 
-        /*val networkHandler = MainPageNetworkHandler(client, lifecycleScope)
-            networkHandler.getLastDaysHotManga{ manga ->
-                manga.forEach{ manga ->
-                    println(manga)
-                }
-            }
+        val networkHandler = MainPageNetworkHandler(client, lifecycleScope)
+
 
         val recyclerView = findViewById<RecyclerView>(R.id.mainRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this,
             LinearLayoutManager.VERTICAL, false)
+
+        /*
 
         getContent { content ->
             lifecycleScope.launch(Dispatchers.Main){
@@ -42,6 +40,17 @@ class MainActivity : AppCompatActivity() {
         }*/
 
     }
+
+    private fun makeDescription(): MangaDescription= MangaDescription(
+            MangaStatistics(50, 100, 200), "Empty description",
+            (0..15).map{i-> "genre №$i"},
+            Publisher("V.Corp Soulless", "Что-то пафосное", "https://api.remanga.org/media/publishers/jakinsteam/high_cover.jpg"),
+            getMangasList())
+
+    private fun getChaptersList() : List<Chapter> = (0..50).map{ i ->
+        Chapter("Том 1. Глава $i.", "$i.06.2021", i, i* 10)
+    }
+
 
     private fun getContent(after: (list: List<Pair<String, List<Manga>>>) -> Unit){
         lifecycleScope.launch(Dispatchers.Default){
