@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.makentoshe.androidgithubcitemplate">
+    package="com.makentoshe.mangareader">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -11,8 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".manga_main_page_activity.MangaMainPage"></activity>
-        <activity android:name=".main_activity.MainActivity">
+        <activity android:name="com.makentoshe.mangareader.manga_main_page_activity.MangaMainPage"/>
+        <activity android:name="com.makentoshe.mangareader.main_activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
