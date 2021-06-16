@@ -3,7 +3,7 @@ package com.makentoshe.mangareader.main_activity.networking
 import android.accounts.NetworkErrorException
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.google.gson.Gson
-import com.makentoshe.mangareader.api.MainScreenAPI
+import com.makentoshe.mangareader.api.StartPageApi
 import com.makentoshe.mangareader.main_activity.networking.best_voted.BestVoted
 import com.makentoshe.mangareader.main_activity.networking.best_voted.BestVotedManga
 import com.makentoshe.mangareader.main_activity.networking.daily_top.DailyTop
@@ -19,10 +19,10 @@ import retrofit2.Retrofit
 
 class MainPageNetworkHandler(client: OkHttpClient, private val lifecycleCoroutineScope: LifecycleCoroutineScope) {
     private val gson = Gson()
-    private var api: MainScreenAPI
+    private var api: StartPageApi
     init{
         val retrofit = Retrofit.Builder().client(client).baseUrl("https://api.remanga.org/").build()
-        api = retrofit.create(MainScreenAPI::class.java)
+        api = retrofit.create(StartPageApi::class.java)
     }
 
     fun getBestVotedManga(after: (mangas: List<BestVotedManga>) -> Unit) {

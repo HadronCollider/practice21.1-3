@@ -9,7 +9,8 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface MainScreenAPI {
+
+interface StartPageApi {
     @GET("/api/titles/")
     fun getLastDaysHotManga(
         // /api/titles/?last_days=7&ordering=-votes

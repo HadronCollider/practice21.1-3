@@ -45,10 +45,10 @@ class MangaMainPageNetworkHandler(client: OkHttpClient,
             val descriptionContents = gson.fromJson(descriptionJson, MangaDescription::class.java)
 
             val similarMangaJson = similarMangaResponse.body()?.string()
-            val similarMangacontents = gson.fromJson(similarMangaJson, SimilarMangas::class.java)
+            val similarMangaContents = gson.fromJson(similarMangaJson, SimilarMangas::class.java)
 
             lifecycleCoroutineScope.launch(Dispatchers.Main) {
-                after.invoke(descriptionContents.content, similarMangacontents.content)
+                after.invoke(descriptionContents.content, similarMangaContents.content)
             }
         }
     }
