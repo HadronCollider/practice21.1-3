@@ -22,6 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import org.jsoup.Jsoup
 import kotlin.math.round
 
 class ViewPagerAdapter(fragmentManager: FragmentManager, private val lifecycleCoroutineScope: LifecycleCoroutineScope,
@@ -54,7 +55,7 @@ class ViewPagerAdapter(fragmentManager: FragmentManager, private val lifecycleCo
 
             val view = inflater.inflate(R.layout.description_fragment, container, false)
             networkHandler.getMangaDescription(mangaDir){ description, similarManga ->
-                view.findViewById<TextView>(R.id.descriptionTextView).text = description.description
+                view.findViewById<TextView>(R.id.descriptionTextView).text = Jsoup.parse(description.description).text()
                 // Stats
                 view.findViewById<TextView>(R.id.likesCount).text =
                     "${roundToThousands(description.totalVotes)}K лайков"
