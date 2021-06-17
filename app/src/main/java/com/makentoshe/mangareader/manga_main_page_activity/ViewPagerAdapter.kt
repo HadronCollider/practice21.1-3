@@ -107,11 +107,15 @@ class ViewPagerAdapter(fragmentManager: FragmentManager, private val lifecycleCo
             container: ViewGroup?,
             savedInstanceState: Bundle?
         ): View {
-            val view =  inflater.inflate(R.layout.chapters_fragment, container, false)
+            val view = inflater.inflate(R.layout.chapters_fragment, container, false)
 
             networkHandler.getMangaDescription(mangaDir){ description, _ ->
-                //val activeBranch = if (description.branches.size == 1) description.branches[0].id else description.activeBranch
-                networkHandler.getMangaChapters(description.branches[0].id){ chapters ->
+                val activeBranch: Int =
+                    if(description.activeBranch != null
+                        && description.activeBranch != 0) {
+                        description.activeBranch
+                        } else description.branches[0].id
+                networkHandler.getMangaChapters(activeBranch){ chapters ->
                     val chaptersRecycler = view.findViewById<RecyclerView>(R.id.chapterListRecyclerView)
                     chaptersRecycler.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
                     chaptersRecycler.adapter = ChaptersAdapter(chapters/*, lifecycleScope, OkHttpClient()*/)

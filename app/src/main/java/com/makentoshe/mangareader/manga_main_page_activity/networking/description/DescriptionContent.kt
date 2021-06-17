@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class DescriptionContent(
     @SerializedName("active_branch")
-    val activeBranch: Int,
+    val activeBranch: Int?,
     @SerializedName("admin_rating")
     val adminRating: String,
     @SerializedName("age_limit")

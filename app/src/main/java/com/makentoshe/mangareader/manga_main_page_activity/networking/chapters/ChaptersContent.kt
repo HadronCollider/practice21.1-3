@@ -17,9 +17,9 @@ data class ChaptersContent(
     @SerializedName("name")
     val name: String,
     @SerializedName("price")
-    val price: String,
+    val price: String?,
     @SerializedName("pub_date")
-    val pubDate: String,
+    val pubDate: String?,
     @SerializedName("publishers")
     val publishers: List<Publisher>,
     @SerializedName("rated")

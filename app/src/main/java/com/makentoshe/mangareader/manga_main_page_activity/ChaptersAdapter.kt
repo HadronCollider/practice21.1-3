@@ -13,6 +13,7 @@ class ChaptersAdapter(private val data: List<ChaptersContent>/*,
                       private val client: OkHttpClient*/) :
 RecyclerView.Adapter<ChaptersAdapter.MyViewHolder>(){
 
+
     //class that handle single element of recycler view
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         var mangaChapter: TextView = itemView.findViewById(R.id.mangaChapter)
@@ -25,7 +26,9 @@ RecyclerView.Adapter<ChaptersAdapter.MyViewHolder>(){
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.mangaChapter.text = "Том ${data[position].tome}. Глава ${data[position].chapter}."
-        holder.publishTimeAndPublisher.text = "${data[position].uploadDate} ${data[position].publishers[0].name}"
+
+        val publisher: String = if(data[position].publishers.isNotEmpty()) data[position].publishers[0].name else ""
+        holder.publishTimeAndPublisher.text = "${data[position].uploadDate} $publisher"
         holder.likesCount.text = data[position].score.toString() // Add special structure for last chapter e.t.c.
     }
 
