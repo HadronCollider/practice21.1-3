@@ -21,12 +21,9 @@ RecyclerView.Adapter<ChaptersAdapter.MyViewHolder>(){
         //var likesButton: ImageButton = itemView.findViewById(R.id.likesButton)
     }
 
-    override fun getItemCount(): Int {
-        return data.size
-    }
+    override fun getItemCount(): Int  = data.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        println(position)
         holder.mangaChapter.text = "Том ${data[position].tome}. Глава ${data[position].chapter}."
         holder.publishTimeAndPublisher.text = "${data[position].uploadDate} ${data[position].publishers[0].name}"
         holder.likesCount.text = data[position].score.toString() // Add special structure for last chapter e.t.c.
